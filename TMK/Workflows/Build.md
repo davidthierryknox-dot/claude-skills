@@ -2,20 +2,7 @@
 
 Interactively construct a TMK structure for a new domain from scratch. Guides the user through domain analysis, layer-by-layer construction, and validation.
 
-## Voice Notification
-
-```bash
-curl -s -X POST http://localhost:8888/notify \
-  -H "Content-Type: application/json" \
-  -d '{"message": "Running Build in TMK skill"}' \
-  > /dev/null 2>&1 &
-```
-
-Running **Build** in **TMK**...
-
-## Reference
-
-Load before executing: `~/.claude/skills/TMK/TmkReference.md`
+**Reference:** `~/.claude/skills/TMK/TmkReference.md`
 
 ## Phase 1: Domain Elicitation
 
@@ -32,6 +19,12 @@ To build a TMK structure for your domain, I need to understand it:
    b. What becomes true AFTER it's done? (postconditions — what changes?)
 5. Are there any relationships between objects that matter? (e.g., X is on Y, X holds Y)
 ```
+
+**Fallback rules (incomplete input):**
+- If user provides partial domain info → infer a draft and mark all inferred fields with `// assumed`
+- If preconditions for an action are unclear → output the field as `"given": ["// assumed: <inferred condition>"]`
+- If actions are ambiguous or unnamed → restrict output to a draft schema skeleton; do not fabricate specific predicates
+- If postconditions are missing → add `"makes": ["// assumed: <inferred state change>"]` rather than omitting the field
 
 ## Phase 2: Build Knowledge Layer
 

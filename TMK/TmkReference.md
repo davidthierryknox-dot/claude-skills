@@ -272,6 +272,36 @@ My plan is as follows:
 - Tasks where semantic associations are correct and helpful
 - Very simple 1-2 step tasks where overhead outweighs gain
 
+### Output Standardization
+
+**Fixed field order** — always emit fields in this sequence:
+
+| Object | Field order |
+|--------|-------------|
+| Goal | `name`, `description`, `inputParameters`, `outputParameters`, `given`, `makes`, `mechanism` |
+| Mechanism | `name`, `description`, `inputParameters`, `outputParameters`, `type`, `requires`, `provides`, `process` |
+| Concept | `name`, `description` |
+| Relation | `name`, `description` |
+
+**Naming conventions:**
+- `Goals[].name` → PascalCase (e.g., `PickUpBlock`)
+- `Mechanisms[].name` → PascalCase + "Mechanism" suffix (e.g., `PickUpBlockMechanism`)
+- `Knowledge.Concepts[].name` → camelCase (e.g., `handIsEmpty`)
+- `Knowledge.Relations[].name` → PascalCase (e.g., `On`, `Holding`)
+
+**Length caps** (per field):
+- `description` → ≤15 words
+- `provides` → ≤15 words per entry
+- `process` → ≤15 words total
+
+**Provides/makes alignment:** Each `provides` entry must correspond to a `makes` entry in the paired Goal, normalized to plain English. One-to-one mapping required — same facts, different register.
+
+| makes (formal) | provides (plain English) |
+|----------------|--------------------------|
+| `Holding(block)` | `block is now held` |
+| `NOT On(block, table)` | `block no longer on table` |
+| `HandIsEmpty()` | `hand is now empty` |
+
 ### Abstraction Level
 - Goals describe WHAT to achieve (teleological — the why)
 - Mechanisms describe HOW to achieve it (procedural — the process)

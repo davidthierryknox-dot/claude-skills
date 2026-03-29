@@ -2,20 +2,7 @@
 
 Apply the TMK framework to an existing planning problem. Takes a user's domain description and constructs a complete TMK JSON prompt.
 
-## Voice Notification
-
-```bash
-curl -s -X POST http://localhost:8888/notify \
-  -H "Content-Type: application/json" \
-  -d '{"message": "Running Apply in TMK skill"}' \
-  > /dev/null 2>&1 &
-```
-
-Running **Apply** in **TMK**...
-
-## Reference
-
-Load before executing: `~/.claude/skills/TMK/TmkReference.md`
+**Reference:** `~/.claude/skills/TMK/TmkReference.md`
 
 ## Step 1: Extract Domain Elements
 
